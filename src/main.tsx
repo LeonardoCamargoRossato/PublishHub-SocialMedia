@@ -4,6 +4,7 @@ import App from './App';
 import {AuthProvider,useAuth} from './auth/AuthContext';
 import PublicHome from './auth/PublicHome';
 import './styles.css';
+import './public.css';
 
 function Root(){
   const {profile,loading,signOut}=useAuth();
