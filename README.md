@@ -1,37 +1,52 @@
 # Publish Hub
 
-Publish Hub is a centralized social media publishing platform designed to organize, prepare, schedule, and distribute content across multiple channels.
+Publish Hub is the standalone social publishing layer extracted from the publishing work that started inside WebSeer.
 
-The project is intended to bring together content from different sources — such as WebSeer Lab and other future applications — into a single workflow for media management and publishing.
+## V0
 
-## Initial Goals
+- React + TypeScript + Vite
+- Content sources: WebSeer, Personal Portfolio, Instituto Foton, Generic Content
+- Universal Media Library
+- Media preparation editor
+- Publishing Queue
+- WebSeer-derived scheduling engine
+- Week publication calendar
+- Google OAuth / YouTube channel connection adapter
+- Instagram-oriented preparation workflow
+- TikTok future placeholder
+- Browser localStorage persistence for V0
 
-- Centralize videos and other media in one library
-- Organize content by source/project
-- Prepare titles, descriptions, thumbnails, tags, and metadata
-- Build publishing queues and recurring schedules
-- Support multiple social platforms
-- Start with YouTube and expand to Instagram and TikTok
+## Product boundary
 
-## Planned Structure
+WebSeer remains responsible for analysis, generation and metadata creation. Publish Hub is responsible for organization, preparation, scheduling and publishing. A WebSeer → Publish Hub API is intentionally deferred to a later version.
 
-```text
-Publish Hub
-├── Dashboard
-├── Sources
-├── Media Library
-├── Publishing Queue
-├── Calendar
-└── Social Platforms
-    ├── YouTube
-    ├── Instagram
-    └── TikTok
+## Local development
+
+```bash
+npm install
+npm run dev
 ```
 
-## Project Status
+## Build
 
-Early-stage project. This repository currently serves as the starting point for the Publish Hub application.
+```bash
+npm run build
+```
 
----
+## Google / YouTube
 
-Developed by Leonardo Camargo Rossato.
+Copy `.env.example` to `.env` and configure the public Google OAuth Web Client ID:
+
+```env
+VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+```
+
+Do not commit client secrets, tokens or private credentials.
+
+## GitHub Pages
+
+The workflow `.github/workflows/deploy-pages.yml` builds and deploys the `main` branch to GitHub Pages. If a repository Actions secret named `VITE_GOOGLE_CLIENT_ID` exists, it is injected into the production build.
+
+## WebSeer reuse
+
+The V0 scheduling algorithm was generalized from `WebSeer/src/publishing/scheduleEngine.ts`. Google/YouTube connection follows the same Google Identity Services direction used in WebSeer authentication. WebSeer itself is not modified by this project.
