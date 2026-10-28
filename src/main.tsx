@@ -5,6 +5,7 @@ import {AuthProvider,useAuth} from './auth/AuthContext';
 import PublicHome from './auth/PublicHome';
 import './styles.css';
 import './public.css';
+import './v02.css';
 
 function Root(){
   const {profile,loading}=useAuth();
