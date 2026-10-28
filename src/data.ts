@@ -7,7 +7,7 @@ export const FOTON_EMAIL=(import.meta.env.VITE_FOTON_GOOGLE_EMAIL??'').trim().to
 export const seedProjects:Project[]=[
 {id:'project-webseer',ownerEmail:LEONARDO_EMAIL,name:'WebSeer - Histogramas Animados',description:'Animated histogram and data visualization publishing workflow.',enabledChannels:['youtube-video','youtube-short','instagram-reel'],integrations:['webseer'],createdAt:now,updatedAt:now},
 {id:'project-lcr',ownerEmail:LEONARDO_EMAIL,name:'LCR - Insta Pessoal',description:'Personal photography and social publishing workspace.',enabledChannels:['instagram-feed','instagram-reel','instagram-story'],integrations:[],createdAt:now,updatedAt:now},
-...(FOTON_EMAIL?[{id:'project-foton',ownerEmail:FOTON_EMAIL,name:'Instituto Foton',description:'Institutional publishing workspace for Instituto Foton.',enabledChannels:['youtube-video','youtube-short','instagram-feed','instagram-reel'] as const,integrations:[],createdAt:now,updatedAt:now}]:[])
+...(FOTON_EMAIL?[{id:'project-foton',ownerEmail:FOTON_EMAIL,name:'Instituto Foton',description:'Institutional publishing workspace for Instituto Foton.',enabledChannels:['youtube-video','youtube-short','instagram-feed','instagram-reel'],integrations:[],createdAt:now,updatedAt:now} as Project]:[])
 ];
 
 export const seedMedia:MediaItem[]=[
