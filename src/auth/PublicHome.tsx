@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {GOOGLE_CLIENT_ID,useAuth} from './AuthContext';
 import {loadGoogle} from './googleSdk';
+import {useLanguage} from '../i18n';
 
 let initialized=false;
 let nonce='';
@@ -8,6 +9,7 @@ let receiver:((credential:string)=>void)|undefined;
 
 export default function PublicHome(){
   const {loading,error,signIn}=useAuth();
+  const {language}=useLanguage();
   const button=useRef<HTMLDivElement>(null);
   const [sdkError,setSdkError]=useState('');
 
@@ -16,6 +18,7 @@ export default function PublicHome(){
     let live=true;
     const handler=(credential:string)=>{if(live)void signIn(credential,nonce)};
     receiver=handler;
+    setSdkError('');
     loadGoogle().then(()=>{
       if(!live||!button.current)return;
       if(!initialized){
@@ -24,10 +27,10 @@ export default function PublicHome(){
         initialized=true;
       }
       button.current.innerHTML='';
-      window.google!.accounts.id.renderButton(button.current,{type:'standard',theme:'outline',size:'large',text:'signin_with',shape:'rectangular',width:300,locale:'pt-BR'});
-    }).catch(()=>{if(live)setSdkError('Não foi possível carregar o login do Google. Verifique sua conexão ou bloqueador do navegador.')});
+      window.google!.accounts.id.renderButton(button.current,{type:'standard',theme:'outline',size:'large',text:'signin_with',shape:'rectangular',width:300,locale:language});
+    }).catch(()=>{if(live)setSdkError(language==='pt-BR'?'Não foi possível carregar o login do Google. Verifique sua conexão ou bloqueador do navegador.':'Could not load Google Sign-In. Check your connection or browser blocker.')});
     return()=>{live=false;if(receiver===handler)receiver=undefined};
-  },[signIn]);
+  },[signIn,language]);
 
   return <div className="public-site commercial-home">
     <header className="public-nav commercial-nav">
